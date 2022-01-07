@@ -1,7 +1,3 @@
-interface AuthenticationObject {
-  token: string;
-}
-
 export type onMessageFunction = (
   event: MessageEvent,
   connection: Connection,

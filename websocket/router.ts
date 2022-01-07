@@ -5,13 +5,27 @@ import {
   onMessageFunction,
 } from "./Connection.ts";
 import { WebsocketUpgradeError } from "../errors.ts";
+import { Dashboard } from "../guiderConnection/Dashboard.ts";
 
 const router = new Router();
 
 const connections: Connection[] = [];
+const dashboard = new Dashboard();
+await dashboard.connect({ hostname: "192.168.1.103", port: 8000 });
 
 const onMessage: onMessageFunction = (event, connection) => {
   console.log(`Incoming message: ${event.data} from ${connection.getUuid()}`);
+
+  const object = JSON.parse(event.data);
+
+  if (object.openDoor && typeof object.openDoor === "boolean") {
+    dashboard.setDoor(object.openDoor);
+  }
+
+  if (object.lampColor && typeof object.lampColor === "number") {
+    dashboard.setLampColor(object.lampColor);
+  }
+
   connection.getSocket().send("Hello World!");
 };
 
@@ -36,7 +50,6 @@ router.get("/ws", async (ctx) => {
 
   socket.addEventListener("open", () => {
     console.log("New Websocket connection.");
-
     connections.push(new Connection(socket, onMessage, onClose));
   });
 });
