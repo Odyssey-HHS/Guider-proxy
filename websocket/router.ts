@@ -24,6 +24,10 @@ const onMessage: onMessageFunction = async (event, connection) => {
     lastResponse = await dashboard.setDoor(object.openDoor);
   }
 
+  if (typeof object.motionAlert === "boolean") {
+    lastResponse = await dashboard.setMotionAlert(object.motionAlert);
+  }
+
   if (typeof object.lampColor === "number") {
     lastResponse = await dashboard.setLampColor(object.lampColor);
   }
