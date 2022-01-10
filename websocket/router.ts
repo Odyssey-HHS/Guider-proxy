@@ -24,8 +24,8 @@ const onMessage: onMessageFunction = async (event, connection) => {
     lastResponse = await dashboard.setDoor(object.openDoor);
   }
 
-  if (typeof object.openDoor === "boolean") {
-    lastResponse = await dashboard.setDoor(object.openDoor);
+  if (typeof object.lampColor === "number") {
+    lastResponse = await dashboard.setLampColor(object.lampColor);
   }
 
   // Send an empty request
