@@ -13,20 +13,27 @@ const connections: Connection[] = [];
 const dashboard = new Dashboard();
 await dashboard.connect({ hostname: "192.168.99.100", port: 8000 });
 
-const onMessage: onMessageFunction = (event, connection) => {
+const onMessage: onMessageFunction = async (event, connection) => {
   console.log(`Incoming message: ${event.data} from ${connection.getUuid()}`);
 
   const object = JSON.parse(event.data);
 
+  let lastResponse;
+
   if (typeof object.openDoor === "boolean") {
-    dashboard.setDoor(object.openDoor);
+    lastResponse = await dashboard.setDoor(object.openDoor);
   }
 
-  if (typeof object.lampColor === "number") {
-    dashboard.setLampColor(object.lampColor);
+  if (typeof object.openDoor === "boolean") {
+    lastResponse = await dashboard.setDoor(object.openDoor);
   }
 
-  connection.getSocket().send("Hello World!");
+  // Send an empty request
+  if (!lastResponse) {
+    lastResponse = await dashboard.updateGuider({});
+  }
+
+  connection.getSocket().send(lastResponse);
 };
 
 const onClose: onCloseFunction = (_event, connection) => {

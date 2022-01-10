@@ -3,21 +3,21 @@ export class Dashboard {
   private lampColor = 0;
   private connection: Deno.Conn | null = null;
 
-  async setDoor(value: boolean) {
+  async setDoor(value: boolean): Promise<string> {
     this.openDoor = value;
-    await this.updateGuider({ openDoor: this.openDoor });
+    return await this.updateGuider({ openDoor: this.openDoor });
   }
 
-  async setLampColor(value: number) {
+  async setLampColor(value: number): Promise<string> {
     this.lampColor = value;
-    await this.updateGuider({ lampColor: this.lampColor });
+    return await this.updateGuider({ lampColor: this.lampColor });
   }
 
   async connect(options: Deno.ConnectOptions) {
     this.connection = await Deno.connect(options);
   }
 
-  async updateGuider(data: Record<string, unknown>) {
+  async updateGuider(data: Record<string, unknown>): Promise<string> {
     if (this.connection === null) {
       throw new Error(
         "Dashboard doesn't have an active TCP connection to Guider",
@@ -26,5 +26,11 @@ export class Dashboard {
 
     const jsonEncoded = new TextEncoder().encode(JSON.stringify(data));
     await this.connection.write(jsonEncoded);
+
+    const buffer = new Uint8Array(4096);
+    this.connection.read(buffer);
+
+    const guiderResponse = new TextDecoder().decode(buffer);
+    return guiderResponse;
   }
 }
