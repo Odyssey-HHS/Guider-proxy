@@ -28,9 +28,11 @@ export class Dashboard {
     await this.connection.write(jsonEncoded);
 
     const buffer = new Uint8Array(4096);
-    this.connection.read(buffer);
+    await this.connection.read(buffer);
 
-    const guiderResponse = new TextDecoder().decode(buffer);
+    const filledBuffer = buffer.slice(0, buffer.findLastIndex(value => value !== 0) + 1);
+
+    const guiderResponse = new TextDecoder().decode(filledBuffer);
     return guiderResponse;
   }
 }
