@@ -2,6 +2,7 @@ export class Dashboard {
   private openDoor = false;
   private lampColor = 0;
   private motionAlert = false;
+  private forceNightTime = false;
   private connection: Deno.Conn | null = null;
 
   async setDoor(value: boolean): Promise<string> {
@@ -12,6 +13,11 @@ export class Dashboard {
   async setLampColor(value: number): Promise<string> {
     this.lampColor = value;
     return await this.updateGuider({ lampColor: this.lampColor });
+  }
+
+  async setForceNightTime(value: boolean): Promise<string> {
+    this.forceNightTime = value;
+    return await this.updateGuider({ fnt: this.forceNightTime });
   }
 
   async setMotionAlert(value: boolean): Promise<string> {

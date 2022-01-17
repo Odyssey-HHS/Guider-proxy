@@ -28,6 +28,10 @@ const onMessage: onMessageFunction = async (event, connection) => {
     lastResponse = await dashboard.setMotionAlert(object.motionAlert);
   }
 
+  if (typeof object.fnt === "boolean") {
+    lastResponse = await dashboard.setForceNightTime(object.fnt);
+  }
+
   if (typeof object.lampColor === "number") {
     lastResponse = await dashboard.setLampColor(object.lampColor);
   }
