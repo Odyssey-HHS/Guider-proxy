@@ -10,6 +10,7 @@ export type onCloseFunction = (
 export class Connection {
   private websocket: WebSocket;
   private uuid = crypto.randomUUID();
+  private type = "";
   private onMessage: onMessageFunction;
 
   constructor(
@@ -35,11 +36,25 @@ export class Connection {
 
     if (typeof authenticationObject.token === "string") {
       if (authenticationObject.token === "hardcoded-valid") {
-        this.websocket.addEventListener(
-          "message",
-          (event) => this.onMessage(event, this),
-        );
-        console.log(`Socket ${this.getUuid()} has authenticated.`);
+        if (authenticationObject.username === "mary" && 
+          authenticationObject.password === "WelkomThuis") {
+          this.type = "resident";
+          this.websocket.addEventListener(
+            "message",
+            (event) => this.onMessage(event, this),
+          );
+          this.websocket.send("{ \"role\": \""+this.type+"\"}");
+          console.log(`Socket ${this.getUuid()} has authenticated as resident.`);
+        } else if (authenticationObject.username === "bob" && 
+          authenticationObject.password === "SesamOpenU") {
+          this.type = "resident";
+          this.websocket.addEventListener(
+            "message",
+            (event) => this.onMessage(event, this),
+          );
+          this.websocket.send("{ \"role\": \""+this.type+"\"}");
+          console.log(`Socket ${this.getUuid()} has authenticated as guard.`);
+       }
       }
     }
   }
@@ -50,5 +65,9 @@ export class Connection {
 
   public getSocket(): WebSocket {
     return this.websocket;
+  }
+
+  public getType(): string {
+    return this.type;
   }
 }
