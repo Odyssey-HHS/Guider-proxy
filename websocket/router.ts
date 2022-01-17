@@ -11,7 +11,7 @@ const router = new Router();
 
 const connections: Connection[] = [];
 const dashboard = new Dashboard();
-await dashboard.connect({ hostname: "192.168.99.100", port: 8000 });
+await dashboard.connect({ hostname: "172.16.99.1", port: 8000 });
 
 const onMessage: onMessageFunction = async (event, connection) => {
   console.log(`Incoming message: ${event.data} from ${connection.getUuid()}`);
@@ -26,6 +26,10 @@ const onMessage: onMessageFunction = async (event, connection) => {
 
   if (typeof object.motionAlert === "boolean") {
     lastResponse = await dashboard.setMotionAlert(object.motionAlert);
+  }
+
+  if (typeof object.fireAlert === "boolean") {
+    lastResponse = await dashboard.setFireAlert(object.fireAlert);
   }
 
   if (typeof object.fnt === "boolean") {
