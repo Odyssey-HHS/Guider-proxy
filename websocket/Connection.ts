@@ -47,7 +47,7 @@ export class Connection {
           console.log(`Socket ${this.getUuid()} has authenticated as resident.`);
         } else if (authenticationObject.username === "bob" && 
           authenticationObject.password === "SesamOpenU") {
-          this.type = "resident";
+          this.type = "guard";
           this.websocket.addEventListener(
             "message",
             (event) => this.onMessage(event, this),
