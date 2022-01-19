@@ -36,25 +36,31 @@ export class Connection {
 
     if (typeof authenticationObject.token === "string") {
       if (authenticationObject.token === "hardcoded-valid") {
-        if (authenticationObject.username === "mary" && 
-          authenticationObject.password === "WelkomThuis") {
+        if (
+          authenticationObject.username === "mary" &&
+          authenticationObject.password === "WelkomThuis"
+        ) {
           this.type = "resident";
           this.websocket.addEventListener(
             "message",
             (event) => this.onMessage(event, this),
           );
-          this.websocket.send("{ \"role\": \""+this.type+"\"}");
-          console.log(`Socket ${this.getUuid()} has authenticated as resident.`);
-        } else if (authenticationObject.username === "bob" && 
-          authenticationObject.password === "SesamOpenU") {
+          this.websocket.send('{ "role": "' + this.type + '"}');
+          console.log(
+            `Socket ${this.getUuid()} has authenticated as resident.`,
+          );
+        } else if (
+          authenticationObject.username === "bob" &&
+          authenticationObject.password === "SesamOpenU"
+        ) {
           this.type = "guard";
           this.websocket.addEventListener(
             "message",
             (event) => this.onMessage(event, this),
           );
-          this.websocket.send("{ \"role\": \""+this.type+"\"}");
+          this.websocket.send('{ "role": "' + this.type + '"}');
           console.log(`Socket ${this.getUuid()} has authenticated as guard.`);
-       }
+        }
       }
     }
   }
