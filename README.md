@@ -10,6 +10,6 @@ all modern browsers over "MILITARY GRATE" ;) encryption. (Just standard SSL).
 
 Install `Deno v1.17.2+` over at https://deno.land/
 
-Run `deno run --allow-net mod.ts`
+Run `deno run --allow-net mod.ts <guider-hostname>`
 
 You can now connect to `ws://127.0.0.1:8443/ws`

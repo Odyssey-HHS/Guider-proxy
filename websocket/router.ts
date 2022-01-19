@@ -11,7 +11,14 @@ const router = new Router();
 
 const connections: Connection[] = [];
 const dashboard = new Dashboard();
-await dashboard.connect({ hostname: "172.16.99.1", port: 8000 });
+
+const hostname = Deno.args[0];
+
+if (!hostname) {
+  throw new Error("No hostname provided! Please run as `deno run -A mod.ts 172.16.99.1`");
+}
+
+await dashboard.connect({ hostname: "192.168.1.103", port: 8000 });
 
 const onMessage: onMessageFunction = async (event, connection) => {
   console.log(`Incoming message: ${event.data} from ${connection.getUuid()}`);
