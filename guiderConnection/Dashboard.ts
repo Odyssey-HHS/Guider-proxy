@@ -2,12 +2,8 @@ export class Dashboard {
   private openDoor = false;
   private lampColor = 0;
   private motionAlert = false;
-<<<<<<< HEAD
   private fireAlert = false; 
   private panicAlert = false;
-=======
-  private fireAlert = false;
->>>>>>> c727fb0c28c7e091192facf0f55af6971e502791
   private forceNightTime = false;
   private connection: Deno.Conn | null = null;
 
