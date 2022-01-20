@@ -32,6 +32,10 @@ const onMessage: onMessageFunction = async (event, connection) => {
     lastResponse = await dashboard.setFireAlert(object.fireAlert);
   }
 
+  if (typeof object.panicAlert === "boolean") {
+    lastResponse = await dashboard.setPanicAlert(object.panicAlert);
+  }
+
   if (typeof object.fnt === "boolean") {
     lastResponse = await dashboard.setForceNightTime(object.fnt);
   }

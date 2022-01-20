@@ -3,6 +3,7 @@ export class Dashboard {
   private lampColor = 0;
   private motionAlert = false;
   private fireAlert = false; 
+  private panicAlert = false;
   private forceNightTime = false;
   private connection: Deno.Conn | null = null;
 
@@ -29,6 +30,11 @@ export class Dashboard {
   async setFireAlert(value: boolean): Promise<string> {
     this.fireAlert = value;
     return await this.updateGuider({ fireAlert: this.fireAlert });
+  }
+
+  async setPanicAlert(value: boolean): Promise<string> {
+    this.panicAlert = value;
+    return await this.updateGuider({ panicAlert: this.panicAlert });
   }
 
   async connect(options: Deno.ConnectOptions) {
