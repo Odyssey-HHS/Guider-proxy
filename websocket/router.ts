@@ -18,7 +18,7 @@ if (!hostname) {
   throw new Error("No hostname provided! Please run as `deno run -A mod.ts 172.16.99.1`");
 }
 
-await dashboard.connect({ hostname: "192.168.1.103", port: 8000 });
+await dashboard.connect({ hostname, port: 8000 });
 
 const onMessage: onMessageFunction = async (event, connection) => {
   console.log(`Incoming message: ${event.data} from ${connection.getUuid()}`);
