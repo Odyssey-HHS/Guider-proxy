@@ -11,7 +11,7 @@ app.use(webSocketRouter.routes());
 app.use(webSocketRouter.allowedMethods());
 
 app.addEventListener("listen", () => {
-  console.log("Application running on port 8000");
+  console.log("Application running on port 8443");
 });
 
 await app.listen({ port: 8443 });

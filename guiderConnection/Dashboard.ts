@@ -2,8 +2,12 @@ export class Dashboard {
   private openDoor = false;
   private lampColor = 0;
   private motionAlert = false;
+<<<<<<< HEAD
   private fireAlert = false; 
   private panicAlert = false;
+=======
+  private fireAlert = false;
+>>>>>>> c727fb0c28c7e091192facf0f55af6971e502791
   private forceNightTime = false;
   private connection: Deno.Conn | null = null;
 
@@ -54,7 +58,10 @@ export class Dashboard {
     const buffer = new Uint8Array(4096);
     await this.connection.read(buffer);
 
-    const filledBuffer = buffer.slice(0, buffer.findLastIndex(value => value !== 0) + 1);
+    const filledBuffer = buffer.slice(
+      0,
+      buffer.findLastIndex((value) => value !== 0) + 1,
+    );
 
     const guiderResponse = new TextDecoder().decode(filledBuffer);
     return guiderResponse;
