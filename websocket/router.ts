@@ -56,6 +56,8 @@ const onMessage: onMessageFunction = async (event, connection) => {
     lastResponse = await dashboard.updateGuider({});
   }
 
+  console.log(lastResponse);
+
   connection.getSocket().send(lastResponse);
 };
 
